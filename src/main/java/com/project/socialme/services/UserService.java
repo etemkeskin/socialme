@@ -1,4 +1,4 @@
-package services;
+package com.project.socialme.services;
 
 import java.util.List;
 import java.util.Optional;
