@@ -9,6 +9,7 @@ import com.project.socialme.entities.Post;
 import com.project.socialme.entities.User;
 import com.project.socialme.repos.PostRepository;
 import com.project.socialme.requests.PostCreateRequest;
+import com.project.socialme.requests.PostUpdateRequest;
 
 @Service
 public class PostService {
@@ -44,6 +45,21 @@ public class PostService {
 			return postRepository.save(toSavePost);
 		}
 
+	}
+
+	public Post updateOnePostById(Long postId, PostUpdateRequest updatePost) {
+		Optional<Post> post = postRepository.findById(postId);
+		if (post.isPresent()) {
+			Post toUpdatePost  = post.get();
+			toUpdatePost.setText(updatePost.getText()); 
+			toUpdatePost.setTitle(updatePost.getTitle()); 
+			postRepository.save(toUpdatePost);
+		}
+		return null;
+	}
+
+	public void deleteOnePostById(Long postId) {
+		postRepository.deleteById(postId);
 	}
 
 }
