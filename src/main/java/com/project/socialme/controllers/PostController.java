@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.project.socialme.entities.Post;
 import com.project.socialme.requests.PostCreateRequest;
 import com.project.socialme.requests.PostUpdateRequest;
+import com.project.socialme.responses.PostResponse;
 import com.project.socialme.services.PostService;
 
 @RestController
@@ -29,7 +30,7 @@ public class PostController {
 	}
 
 	@GetMapping
-	public List<Post> getAllPosts(@RequestParam Optional<Long> userId) {
+	public List<PostResponse> getAllPosts(@RequestParam Optional<Long> userId) {
 		return postService.getAllPosts(userId);
 	}
 

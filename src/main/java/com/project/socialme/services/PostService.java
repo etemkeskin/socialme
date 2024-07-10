@@ -2,6 +2,7 @@ package com.project.socialme.services;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
@@ -10,6 +11,7 @@ import com.project.socialme.entities.User;
 import com.project.socialme.repos.PostRepository;
 import com.project.socialme.requests.PostCreateRequest;
 import com.project.socialme.requests.PostUpdateRequest;
+import com.project.socialme.responses.PostResponse;
 
 @Service
 public class PostService {
@@ -22,11 +24,15 @@ public class PostService {
 		this.userService = userService;
 	}
 
-	public List<Post> getAllPosts(Optional<Long> userId) {
+	public List<PostResponse> getAllPosts(Optional<Long> userId) {
+		List<Post> list;
 		if (userId.isPresent()) {
-			return postRepository.findByUserId(userId.get());
+			list = postRepository.findByUserId(userId.get());
+		} else {
+			list = postRepository.findAll();
 		}
-		return postRepository.findAll();
+		
+		return list.stream().map(p -> new PostResponse(p)).collect(Collectors.toList());
 	}
 
 	public Post getOnePostById(Long postId) {
